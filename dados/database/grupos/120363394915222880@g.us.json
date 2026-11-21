@@ -1,0 +1,26 @@
+{
+  "mark": {},
+  "createdAt": "2026-11-07T15:05:33.524Z",
+  "groupName": "🐦‍🔥 FÊNIX GLOBAL 🌐🐦‍🔥",
+  "modorpg": false,
+  "minMessage": null,
+  "moderators": [],
+  "allowedModCommands": [],
+  "mutedUsers": {},
+  "mutedUsers2": {},
+  "levelingEnabled": false,
+  "adminWhitelist": {},
+  "roles": {},
+  "roleMessages": {},
+  "contador": [
+    {
+      "id": "178392171311214@lid",
+      "msg": 1,
+      "cmd": 0,
+      "figu": 0,
+      "pushname": "MI479558",
+      "firstSeen": "2026-11-07T15:05:33.566Z",
+      "lastActivity": "2026-11-07T15:05:33.566Z"
+    }
+  ]
+}

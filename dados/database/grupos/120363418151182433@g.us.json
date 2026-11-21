@@ -1,0 +1,44 @@
+{
+  "mark": {},
+  "createdAt": "2026-11-07T15:05:02.261Z",
+  "groupName": "🍁 South América 0 🍁 320/400",
+  "modorpg": false,
+  "minMessage": null,
+  "moderators": [],
+  "allowedModCommands": [],
+  "mutedUsers": {},
+  "mutedUsers2": {},
+  "levelingEnabled": false,
+  "adminWhitelist": {},
+  "roles": {},
+  "roleMessages": {},
+  "contador": [
+    {
+      "id": "171231991070820@lid",
+      "msg": 4,
+      "cmd": 0,
+      "figu": 0,
+      "pushname": "Henry/konshu",
+      "firstSeen": "2026-11-07T15:05:02.362Z",
+      "lastActivity": "2026-11-07T15:05:58.200Z"
+    },
+    {
+      "id": "230619007197376@lid",
+      "msg": 3,
+      "cmd": 0,
+      "figu": 0,
+      "pushname": "João",
+      "firstSeen": "2026-11-07T15:05:24.338Z",
+      "lastActivity": "2026-11-07T15:05:52.351Z"
+    },
+    {
+      "id": "51020201758758@lid",
+      "msg": 1,
+      "cmd": 0,
+      "figu": 0,
+      "pushname": "~44",
+      "firstSeen": "2026-11-07T15:05:43.135Z",
+      "lastActivity": "2026-11-07T15:05:43.135Z"
+    }
+  ]
+}

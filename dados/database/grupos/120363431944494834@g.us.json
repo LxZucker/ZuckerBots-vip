@@ -1,0 +1,26 @@
+{
+  "mark": {},
+  "createdAt": "2026-11-07T15:05:14.216Z",
+  "groupName": "Dona Economia #53",
+  "modorpg": false,
+  "minMessage": null,
+  "moderators": [],
+  "allowedModCommands": [],
+  "mutedUsers": {},
+  "mutedUsers2": {},
+  "levelingEnabled": false,
+  "adminWhitelist": {},
+  "roles": {},
+  "roleMessages": {},
+  "contador": [
+    {
+      "id": "194197634158651@lid",
+      "msg": 1,
+      "cmd": 0,
+      "figu": 0,
+      "pushname": "Admin",
+      "firstSeen": "2026-11-07T15:05:14.256Z",
+      "lastActivity": "2026-11-07T15:05:14.256Z"
+    }
+  ]
+}

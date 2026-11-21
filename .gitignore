@@ -1,0 +1,10 @@
+node_modules/
+.zucker-update-backup-*/
+auth_info/
+**/auth/
+**/sessions/
+.env
+.env.*
+!.env.example
+*.pem
+*.key

@@ -1,0 +1,61 @@
+[
+  {
+    "id": "mwa5wrl3pydm7c",
+    "slot": 1,
+    "type": "store",
+    "command": "cmenu",
+    "permission": "owner"
+  },
+  {
+    "id": "mwa5wxvo2o1cw5",
+    "slot": 1,
+    "type": "show",
+    "command": "menu",
+    "permission": "all"
+  },
+  {
+    "id": "mwaou9fqc74r9q",
+    "type": "reply",
+    "command": "tengu",
+    "response": "Burro!! Bobo!",
+    "intervalMs": 1000,
+    "permission": "all",
+    "repeatCount": 1
+  },
+  {
+    "id": "mwaounhbgzytt7",
+    "type": "reply",
+    "command": "bestiall",
+    "response": "Cordão supremo",
+    "intervalMs": 1000,
+    "permission": "all",
+    "repeatCount": 1
+  },
+  {
+    "id": "mwaouymd8d6i05",
+    "type": "reply",
+    "command": "danico",
+    "response": "Ninico ninico",
+    "intervalMs": 1000,
+    "permission": "all",
+    "repeatCount": 1
+  },
+  {
+    "id": "mwaov896crkkzx",
+    "type": "reply",
+    "command": "vn",
+    "response": "Mó entrosa esse ai",
+    "intervalMs": 1000,
+    "permission": "all",
+    "repeatCount": 1
+  },
+  {
+    "id": "mwarg6od4xfa5x",
+    "type": "reply",
+    "command": "testspam",
+    "response": "Test",
+    "intervalMs": 1000,
+    "permission": "owner",
+    "repeatCount": 5
+  }
+]

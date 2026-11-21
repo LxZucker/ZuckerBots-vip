@@ -1,0 +1,22 @@
+{
+  "botPvEnabled": true,
+  "botGpEnabled": true,
+  "pvUnknownMessage": "Idiota",
+  "gpUnknownMessage": "Ihhhh ala, burrão mané kkkkkkkkkk",
+  "pvOwnerCooldown": 1,
+  "pvUserCooldown": 1,
+  "gpOwnerCooldown": 1,
+  "gpUserCooldown": 3,
+  "gpAllGroups": false,
+  "gpSelectedGroups": [
+    "120363427430200589@g.us",
+    "120363432726536569@g.us",
+    "120363414712027552@g.us",
+    "120363433965840373@g.us",
+    "120363414085134268@g.us"
+  ],
+  "autoReplyEnabled": false,
+  "autoReplyMessage": "Use /menu para descobrir minhas funções",
+  "autoReplyCooldownMinutes": 1,
+  "autoReplyExcludedNumbers": []
+}

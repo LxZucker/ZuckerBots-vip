@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "version": "10.11.36",
+  "entrypoint": "dados/src/connect.js"
+}

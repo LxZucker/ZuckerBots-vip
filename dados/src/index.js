@@ -49,6 +49,13 @@ const autoReplyCooldownsPath = path.join(
 );
 
 const cooldowns = new Map();
+// Estado persistente do modo ausente.
+const absentModePath = path.join(
+  __dirname,
+  "../database/dono/absentMode.json"
+);
+
+let absentMode = false;
 
 function readJson(file, fallback) {
   try {

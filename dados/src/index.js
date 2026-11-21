@@ -687,6 +687,12 @@ async function executarDivulgacao() {
         }
 
         for (const slot of availableSlots) {
+          if (absentMode) {
+            interrupted = true;
+            interruptionReason = "Divulgação pausada pelo modo ausente.";
+            break;
+          }
+
           if (!panel.canRunFeatures()) {
             interrupted = true;
             interruptionReason = "Execução interrompida: validação de acesso indisponível.";

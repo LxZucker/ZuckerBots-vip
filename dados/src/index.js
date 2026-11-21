@@ -834,6 +834,7 @@ function checkCooldown(mode, sender, owner, config) {
 
 async function processAutoReplyPV(socket, info, from, text) {
   // Nunca responde a mensagens próprias, grupos ou status.
+  if (absentMode) return false;
   if (info?.key?.fromMe) return false;
   if (!from || from.endsWith("@g.us") || from === "status@broadcast") {
     return false;

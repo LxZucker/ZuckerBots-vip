@@ -974,9 +974,6 @@ export default async function receiveWhatsAppMessage(
       return;
     }
 
-    writeJson(absentModePath, {
-    
-
         // COMANDOS EXCLUSIVOS DO DONO: AUSENTE E ONLINE.
     const controlPrefix = String(panel.commandPrefix || "#");
     const isPrivateChat =

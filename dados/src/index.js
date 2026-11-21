@@ -668,6 +668,12 @@ async function executarDivulgacao() {
       const failureReasons = [];
 
       for (const group of uniqueGroups) {
+        if (absentMode) {
+          interrupted = true;
+          interruptionReason = "Divulgação pausada pelo modo ausente.";
+          break;
+        }
+
         if (!panel.canRunFeatures()) {
           interrupted = true;
           interruptionReason = "Execução interrompida: validação de acesso indisponível.";

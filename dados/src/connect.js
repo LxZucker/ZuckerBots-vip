@@ -461,7 +461,7 @@ async function createAuthBackup(reason = 'periódico') {
         console.log(`💾 Backup da sessão WhatsApp atualizado (${reason}).`);
         return true;
     } catch (error) {
-        if (error.code !== 'ENOENT' || reason !== 'periódico') {
+        if (error.code !== 'ENOENT') {
             console.warn(`⚠️ Não foi possível atualizar o backup da sessão: ${error.message}`);
         }
         return false;
@@ -496,7 +496,7 @@ async function restoreAuthBackupIfNeeded() {
         console.log('♻️ Sessão restaurada do último backup automático.');
         return true;
     } catch (error) {
-        console.warn(`⚠️ Não foi possível restaurar o backup da sessão: ${error.message}`);
+        if (error.code !== "ENOENT") console.warn(`⚠ Não foi possível restaurar o backup da sessão: ${error.message}`);
         return false;
     }
 }

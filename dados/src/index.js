@@ -85,6 +85,8 @@ function writeJson(file, data) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, JSON.stringify(data, null, 2));
 }
+// Recupera o modo ausente após reinicializações.
+absentMode = readJson(absentModePath, { enabled: false }).enabled === true;
 
 function unwrapMessage(msg) {
   let current = msg;

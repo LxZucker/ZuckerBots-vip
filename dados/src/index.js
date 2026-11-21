@@ -480,6 +480,7 @@ const divulgacaoLastRuns = new Map();
 
 async function executarDivulgacao() {
   if (divulgacaoRunning) return;
+  if (absentMode) return;
   if (!panel.canRunFeatures()) return;
   if (panel.divulgacaoEnabled !== true) return;
 

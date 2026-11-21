@@ -962,6 +962,77 @@ export default async function receiveWhatsAppMessage(
     }
 
     if (!panel.canRunFeatures()) {
+          // COMANDOS EXCLUSIVOS DO DONO: AUSENTE E ONLINE.
+    const controlPrefix = String(panel.commandPrefix || "#");
+    const isPrivateChat =
+      !from.endsWith("@g.us") &&
+      from !== "status@broadcast";
+
+    if (
+      isPrivateChat &&
+      controlPrefix &&
+      incomingTextForAdmin.startsWith(controlPrefix)
+    ) {
+      const controlCommand = incomingTextForAdmin
+        .slice(controlPrefix.length)
+        .trim()
+        .toLowerCase();
+
+      if (controlCommand === "ausente" || controlCommand === "online") {
+
+        // Somente o número do dono cadastrado no painel.
+        if (!isOwner(from, info)) return;
+
+        if (controlCommand === "ausente") {
+          if (absentMode) {
+            await socket.sendMessage(from, {
+              text: "⚠️ O modo ausente já está ativado."
+            });
+            return;
+          }
+
+          absentMode = true;
+
+          writeJson(absentModePath, {
+            enabled: true,
+            updatedAt: new Date().toISOString()
+          });
+
+          await socket.sendMessage(from, {
+            text: "💤 *MODO AUSENTE ATIVADO!*\n\nO bot continuará conectado e recebendo mensagens, mas não executará comandos nem enviará respostas automáticas. A divulgação também foi pausada.\n\nUse o comando online para reativar."
+          });
+
+          console.log("[ZuckerBots] Modo ausente ativado pelo dono.");
+          return;
+        }
+
+        if (controlCommand === "online") {
+          if (!absentMode) {
+            await socket.sendMessage(from, {
+              text: "🐲O bot já está online!🐲"
+            });
+            return;
+          }
+
+          absentMode = false;
+
+          writeJson(absentModePath, {
+            enabled: false,
+            updatedAt: new Date().toISOString()
+          });
+
+          await socket.sendMessage(from, {
+            text: "🐉 *ZUCKERBOT ONLINE NOVAMENTE!*\n\nOs comandos e as respostas automáticas foram reativados. A divulgação programada também voltou a funcionar."
+          });
+
+          console.log("[ZuckerBots] Modo ausente desativado pelo dono.");
+          return;
+        }
+      }
+    }
+
+    // No modo ausente, ignora todas as outras mensagens.
+    if (absentMode) return;
       const now = Date.now();
       if (!globalThis.__zuckerAccessNoticeAt || now - globalThis.__zuckerAccessNoticeAt > 15000) {
         globalThis.__zuckerAccessNoticeAt = now;

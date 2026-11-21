@@ -973,8 +973,10 @@ export default async function receiveWhatsAppMessage(
       return;
     }
 
-    if (!panel.canRunFeatures()) {
-          // COMANDOS EXCLUSIVOS DO DONO: AUSENTE E ONLINE.
+    writeJson(absentModePath, {
+    
+
+        // COMANDOS EXCLUSIVOS DO DONO: AUSENTE E ONLINE.
     const controlPrefix = String(panel.commandPrefix || "#");
     const isPrivateChat =
       !from.endsWith("@g.us") &&
@@ -992,13 +994,13 @@ export default async function receiveWhatsAppMessage(
 
       if (controlCommand === "ausente" || controlCommand === "online") {
 
-        // Somente o número do dono cadastrado no painel.
+        // Somente o dono cadastrado no painel.
         if (!isOwner(from, info)) return;
 
         if (controlCommand === "ausente") {
           if (absentMode) {
             await socket.sendMessage(from, {
-              text: "⚠️ O modo ausente já está ativado."
+              text: "💤 O modo ausente já está ativado."
             });
             return;
           }
@@ -1021,7 +1023,7 @@ export default async function receiveWhatsAppMessage(
         if (controlCommand === "online") {
           if (!absentMode) {
             await socket.sendMessage(from, {
-              text: "🐲O bot já está online!🐲"
+              text: "🐲 O bot já está online! 🐲"
             });
             return;
           }
@@ -1045,12 +1047,20 @@ export default async function receiveWhatsAppMessage(
 
     // No modo ausente, ignora todas as outras mensagens.
     if (absentMode) return;
+
+    // Verifica se o bot possui acesso para executar funcionalidades.
+    if (!panel.canRunFeatures()) {
       const now = Date.now();
-      if (!globalThis.__zuckerAccessNoticeAt || now - globalThis.__zuckerAccessNoticeAt > 15000) {
+
+      if (
+        !globalThis.__zuckerAccessNoticeAt ||
+        now - globalThis.__zuckerAccessNoticeAt > 15000
+      ) {
         globalThis.__zuckerAccessNoticeAt = now;
       }
+
       return;
-    }
+  }
 
     const isGroup = from.endsWith("@g.us");
     const mode = isGroup ? "gp" : "pv";

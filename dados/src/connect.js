@@ -962,9 +962,10 @@ async function performMigration(ZuckerBotSock) {
 
 
 let reconnectAttempts = 0;
-let isReconnecting = false; 
-let reconnectTimer = null; 
-let forbidden403Attempts = 0; 
+let isReconnecting = false;
+let reconnectTimer = null;
+let forbidden403Attempts = 0;
+let activeBotSocket = null;
 const MAX_RECONNECT_ATTEMPTS = 10;
 const MAX_403_ATTEMPTS = 3; 
 const RECONNECT_DELAY_BASE = 5000; 

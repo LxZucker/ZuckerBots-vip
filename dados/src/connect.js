@@ -997,7 +997,7 @@ async function createBotSocket(authDir) {
         const version = await getWAVersion();
         console.log(`📱 Usando versão do WhatsApp: ${version.join('.')}`);
 
-        const ZuckerBotSock = makeWASocket({
+                const ZuckerBotSock = makeWASocket({
             version,
             emitOwnEvents: true,
             fireInitQueries: true,
@@ -1008,7 +1008,7 @@ async function createBotSocket(authDir) {
             retryRequestDelayMs: 5000,
             qrTimeout: 180000,
             keepAliveIntervalMs: 30_000,
-                 defaultQueryTimeoutMs: 60_000,
+            defaultQueryTimeoutMs: 60_000,
             maxMsgRetryCount: 5,
             shouldIgnoreJid: (jid) =>
                 isJidBroadcast(jid) || isJidStatusBroadcast(jid) || isJidNewsletter(jid),
@@ -1018,6 +1018,8 @@ async function createBotSocket(authDir) {
             signalRepository,
             logger
         });
+
+        activeBotSocket = ZuckerBotSock;
 
         // O pareamento por número agora é solicitado pelo painel ZuckerBots.
         panel.startRuntime(ZuckerBotSock, authDir);

@@ -42,6 +42,12 @@ const divulgacaoMediaDir = path.join(
   "../database/dono/divulgacaoMedia"
 );
 
+// Estado persistente do modo ausente. Não altera as configurações do painel.
+const modoAusentePath = path.join(
+  __dirname,
+  "../database/dono/modoAusente.json"
+);
+
 // Cooldown persistente da resposta automática (um por conversa PV).
 const autoReplyCooldownsPath = path.join(
   __dirname,
@@ -61,6 +67,13 @@ function readJson(file, fallback) {
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+let modoAusente = readJson(modoAusentePath, { enabled: false })?.enabled === true;
+
+function definirModoAusente(enabled) {
+  modoAusente = enabled === true;
+  writeJson(modoAusentePath, { enabled: modoAusente, updatedAt: new Date().toISOString() });
 }
 
 // Baileys mantém o estado real do WebSocket em socket.ws.isOpen.
@@ -470,6 +483,7 @@ let divulgacaoRunning = false;
 const divulgacaoLastRuns = new Map();
 
 async function executarDivulgacao() {
+  if (modoAusente) return;
   if (divulgacaoRunning) return;
   if (!panel.canRunFeatures()) return;
   if (panel.divulgacaoEnabled !== true) return;
@@ -658,6 +672,11 @@ async function executarDivulgacao() {
       const failureReasons = [];
 
       for (const group of uniqueGroups) {
+        if (modoAusente) {
+          interrupted = true;
+          interruptionReason = "Divulgação pausada: modo ausente ativado pelo dono.";
+          break;
+        }
         if (!panel.canRunFeatures()) {
           interrupted = true;
           interruptionReason = "Execução interrompida: validação de acesso indisponível.";
@@ -671,6 +690,11 @@ async function executarDivulgacao() {
         }
 
         for (const slot of availableSlots) {
+          if (modoAusente) {
+            interrupted = true;
+            interruptionReason = "Divulgação pausada: modo ausente ativado pelo dono.";
+            break;
+          }
           if (!panel.canRunFeatures()) {
             interrupted = true;
             interruptionReason = "Execução interrompida: validação de acesso indisponível.";
@@ -968,6 +992,58 @@ export default async function receiveWhatsAppMessage(
     } catch (error) {
       console.error("[ZuckerBots] Erro no painel:", error.message);
     }
+
+    // /ausente e /online são comandos exclusivos do dono cadastrado no painel.
+    // São tratados antes dos modos PV/GP para funcionarem mesmo com esses modos desligados.
+    const prefixoPresenca = String(panel.commandPrefix || "#");
+    const textoPresenca = String(getText(info.message).text || "").trim();
+    if (prefixoPresenca && textoPresenca.startsWith(prefixoPresenca)) {
+      const textoComandoPresenca = textoPresenca.slice(prefixoPresenca.length).trim();
+      const comandoPresenca = textoComandoPresenca.split(/\s+/)[0].toLowerCase();
+
+      if (comandoPresenca === "ausente" || comandoPresenca === "online") {
+        const remetentePresenca = isGroup
+          ? (info.key.participant || info.participant || "")
+          : from;
+
+        // Quem não for o dono cadastrado não recebe resposta e não altera o estado.
+        if (!isOwner(remetentePresenca, info)) return;
+
+        if (comandoPresenca === "ausente") {
+          if (modoAusente) {
+            await socket.sendMessage(from, {
+              text: "🐉 O ZuckerBots já está em modo ausente. 🐲"
+            }, { quoted: info });
+            return;
+          }
+
+          definirModoAusente(true);
+          console.log("[ZuckerBots] Modo ausente ativado pelo dono. Respostas e divulgações pausadas.");
+          await socket.sendMessage(from, {
+            text: `🐉 *ZuckerBots em modo ausente!*\n\nNo momento, vou ficar ausente e não responderei às mensagens.\nPara voltar a ficar online, use *${prefixoPresenca}online*. 🐲`
+          }, { quoted: info });
+          return;
+        }
+
+        if (!modoAusente) {
+          await socket.sendMessage(from, {
+            text: "🐉 O ZuckerBots já está online e funcionando normalmente! 🐲"
+          }, { quoted: info });
+          return;
+        }
+
+        definirModoAusente(false);
+        console.log("[ZuckerBots] Modo ausente desativado pelo dono. Respostas e divulgações liberadas.");
+        await socket.sendMessage(from, {
+          text: "🐉 *ZuckerBots voltou a ficar online!*\n\nEstou online novamente e voltei a responder normalmente. 🐲"
+        }, { quoted: info });
+        return;
+      }
+    }
+
+    // Mesmo ausente, as mensagens continuam sendo recebidas e registradas no painel.
+    // Apenas as respostas, comandos comuns, respostas automáticas e divulgações são pausados.
+    if (modoAusente) return;
 
     // Divulgação é independente da ativação do BOT GP.
     if (isGroup) {

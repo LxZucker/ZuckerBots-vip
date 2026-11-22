@@ -1363,10 +1363,10 @@ const attachMessagesListener = () => {
 
 async function startNazu() {
 
-    if (isReconnecting) {
-        console.log('⚠️ Reconexão já em andamento, ignorando chamada duplicada...');
+        if (isReconnecting || activeBotSocket) {
+        console.log('⚠️ Já existe uma inicialização ou conexão ativa. Ignorando chamada duplicada...');
         return;
-    }
+        }
 
     isReconnecting = true;
 

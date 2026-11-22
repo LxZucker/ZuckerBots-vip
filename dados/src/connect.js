@@ -1186,13 +1186,18 @@ const attachMessagesListener = () => {
                 printHealthStatus();
                 healthStatusInterval = setInterval(printHealthStatus, 60_000);
             }
-            if (connection === 'close') {
+                        if (connection === 'close') {
                 panel.setWhatsAppConnected(false);
+
+                if (activeBotSocket === ZuckerBotSock) {
+                    activeBotSocket = null;
+                }
+
                 if (healthStatusInterval) {
                     clearInterval(healthStatusInterval);
                     healthStatusInterval = null;
                 }
-            }
+                        }
             if (connection === 'open') {
                                  try {
                  
